@@ -1,4 +1,5 @@
 import unittest
 
-class test_form(unittest.TestCase):
-    pass
+class TestForm(unittest.TestCase):
+    def test_forms_opens():
+        pass
