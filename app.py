@@ -7,7 +7,7 @@ def index():
 
 @app.route('/main')
 def main():
-    return render_template('home.html.j2')
+    return render_template('home.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

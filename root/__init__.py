@@ -8,23 +8,13 @@ from flask_login import LoginManager
 login_manager = LoginManager()
 
 app = Flask(__name__)
-
-# create database and connection to database
-def create_connection(db_file):
-    """ create a database connection to a SQLite database """
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-        print(sqlite3.version)
-    except Error as e:
-        print(e)
-    finally:
-        if conn:
-            conn.close()
-
 app.config['SECRET_KEY'] = 'mysecretkey'
-# Get filepath OS independant
+# Get filepath, OS independant
 basedir = os.path.abspath(os.path.dirname(__file__))
-db_path = os.path.join(basedir, 'data.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+# remove the tracking as SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Create database
+db = SQLAlchemy(app)
 
-db = create_connection(db_path)
+login_manager.login_view = 'login'
